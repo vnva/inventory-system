@@ -11,6 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import PasswordInput from '@/components';
+import api from '@/api';
 
 type FormValues = {
   username: string;
@@ -32,7 +33,7 @@ const SignInForm = () => {
   });
 
   const onSubmit = handleSubmit(data => {
-    console.log(data);
+    api.auth.signin().then(response => console.log(response));
   });
 
   return (
