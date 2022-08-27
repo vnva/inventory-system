@@ -2,9 +2,14 @@
   "name": "inventory-system",
   "version": "1.0.0",
   "scripts": {
+    "db:down": "docker stop postgres-inventory-dev && docker rm postgres-inventory-dev",
+    "db:up": "docker run --name postgres-inventory-dev -p 5432:5432 -e POSTGRES_USER=inventory -e POSTGRES_PASSWORD=password -d postgres:14.4-alpine",
     "dev:client": "cp .env client && cd client && yarn dev",
     "dev:server": "cp .env server && cd server && yarn dev",
-    "dev": "concurrently --names \"Server,Client\" -c \"bgGreenBright.bold,bgBlueBright.bold\" --prefix \"{time}-{name}\" -t \"HH:mm:ss\" -k \"yarn dev:server\" \"yarn dev:client\""
+    "dev": "concurrently --names \"Server,Client\" -c \"bgGreenBright.bold,bgBlueBright.bold\" --prefix \"{time}-{name}\" -t \"HH:mm:ss\" -k \"yarn dev:server\" \"yarn dev:client\"",
+    "prisma:migrate": "cp .env ./server && cd server && yarn prisma migrate dev",
+    "prisma:push": "cp .env ./server && cd server && yarn prisma db push",
+    "prisma:generate": "cp .env ./server && cd server && yarn prisma generate"
   },
   "repository": "https://github.com/vnva/inventory-system.git",
   "author": "Vyacheslav Ananev <vnva.dev@gmail.com>",
