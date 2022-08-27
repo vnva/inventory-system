@@ -1,7 +1,10 @@
 import client from '../client';
 
-const auth = {
-  signin: () => client.post('/auth/signin'),
-};
+export interface SigninDTO {
+  username: string;
+  password: string;
+}
 
-export default auth;
+export const auth = {
+  signin: (data: SigninDTO) => client.post('/auth/signin', data),
+};

@@ -7,8 +7,9 @@ const siteMap = {
     title: 'Вход',
     path: '/signin',
   },
-  signup: {
-    title: 'Регистрация',
+  docs: {
+    title: 'Документация',
+    path: '/docs',
   },
 };
 

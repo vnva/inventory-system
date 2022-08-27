@@ -5,13 +5,18 @@ import {
   FormLabel,
   Heading,
   Input,
+  useToast,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
 import PasswordInput from '@/components';
-import api from '@/api';
+import * as api from '@/api';
+import { useAuth } from '@/hooks';
+import { siteMap } from '@/consts';
+import { setUser, useAppDispatch } from '@/store';
 
 type FormValues = {
   username: string;
@@ -19,21 +24,47 @@ type FormValues = {
 };
 
 const schema = yup.object({
-  username: yup.string().required(),
-  password: yup.string().min(5).required(),
+  username: yup.string().min(4).required(),
+  password: yup.string().min(4).required(),
 });
 
-const SignInForm = () => {
+export const SigninForm = () => {
+  const toast = useToast();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting, isDirty },
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
 
+  const { signin } = useAuth();
+
   const onSubmit = handleSubmit(data => {
-    api.auth.signin().then(response => console.log(response));
+    return api.auth
+      .signin(data)
+      .then(({ data }) => {
+        signin(data);
+        dispatch(setUser()).then(() => navigate(siteMap.dashboard.path));
+      })
+      .catch(error => {
+        if (error.response.status === 400) {
+          toast({
+            description: 'Неверный логин или пароль',
+            status: 'error',
+            position: 'bottom-right',
+          });
+        } else {
+          toast({
+            description: 'Неизвестная ошибка',
+            status: 'error',
+            position: 'bottom-right',
+          });
+        }
+      });
   });
 
   return (
@@ -44,7 +75,6 @@ const SignInForm = () => {
       <FormControl mb={3} isInvalid={!!errors.username}>
         <FormLabel>Логин</FormLabel>
         <Input
-          background="white"
           {...register('username', {
             required: { value: true, message: 'Обязательное поле' },
           })}
@@ -55,7 +85,6 @@ const SignInForm = () => {
       <FormControl mb={5} isInvalid={!!errors.password}>
         <FormLabel>Пароль</FormLabel>
         <PasswordInput
-          background="white"
           {...register('password', {
             required: { value: true, message: 'Обязательное поле' },
           })}
@@ -63,11 +92,15 @@ const SignInForm = () => {
         />
         <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
       </FormControl>
-      <Button onClick={onSubmit} width="100%" colorScheme="teal">
+      <Button
+        isDisabled={!isDirty}
+        isLoading={isSubmitting}
+        onClick={onSubmit}
+        width="100%"
+        colorScheme="teal"
+      >
         Войти
       </Button>
     </>
   );
 };
-
-export default SignInForm;

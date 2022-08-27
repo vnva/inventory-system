@@ -1,20 +1,19 @@
+import { siteMap } from '@/consts';
+import { useAppSelector } from '@/store';
 import { Box } from '@chakra-ui/react';
+import { Navigate } from 'react-router-dom';
 
-import SignInForm from './form';
+import { SigninForm } from './form';
 
-const SignInPage = () => {
+export const SigninPage = () => {
+  const userIsLoaded = useAppSelector(state => state.auth.userIsLoaded);
+  if (userIsLoaded) return <Navigate to={siteMap.dashboard.path} replace />;
+
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      height="100vh"
-      background="gray.100"
-    >
+    <Box display="flex" justifyContent="center" height="100vh">
       <Box pt="30vh" width={['90%', '350px']}>
-        <SignInForm />
+        <SigninForm />
       </Box>
     </Box>
   );
 };
-
-export default SignInPage;
