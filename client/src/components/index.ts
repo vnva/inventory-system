@@ -1,3 +1,2 @@
-import PasswordInput from './password-input';
-
-export default PasswordInput;
+export * from './password-input';
+export * from './data-grid';

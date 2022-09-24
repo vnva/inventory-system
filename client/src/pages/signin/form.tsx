@@ -12,7 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
-import PasswordInput from '@/components';
+import { PasswordInput } from '@/components';
 import * as api from '@/api';
 import { useAuth } from '@/hooks';
 import { siteMap } from '@/consts';

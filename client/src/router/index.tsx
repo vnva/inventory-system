@@ -3,10 +3,16 @@ import { siteMap } from '@/consts';
 import loadable from '@loadable/component';
 import { MainLayout } from '@/layouts';
 import { InitialRoute } from './initial';
-import { useEffect } from 'react';
 import { ProtectedRoute } from './protected';
+import { SpreadsheetPage } from '@/pages/spreadsheet';
 
 const DashboardPage = loadable(() => import('@/pages/dashboard'));
+const SpreadsheetsPage = loadable(() =>
+  import('@/pages/spreadsheets').then(m => ({ default: m.SpreadsheetsPage }))
+);
+// const SpreadsheetPage = loadable(() =>
+//   import('@/pages/spreadsheet').then(m => ({ default: m.SpreadsheetPage }))
+// );
 const SignInPage = loadable(() =>
   import('@/pages/signin').then(m => ({ default: m.SigninPage }))
 );
@@ -30,6 +36,14 @@ const Router = () => (
           }
         >
           <Route path={siteMap.dashboard.path} element={<DashboardPage />} />
+          <Route
+            path={siteMap.spreadsheets.path}
+            element={<SpreadsheetsPage />}
+          />
+          <Route
+            path={siteMap.spreadsheet.path}
+            element={<SpreadsheetPage />}
+          />
           <Route path={siteMap.docs.path} element={<DocsPage />} />
         </Route>
         <Route path={siteMap.signin.path} element={<SignInPage />} />

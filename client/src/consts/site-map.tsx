@@ -11,6 +11,14 @@ const siteMap = {
     title: 'Документация',
     path: '/docs',
   },
+  spreadsheets: {
+    title: 'Таблицы',
+    path: '/spreadsheets',
+  },
+  spreadsheet: {
+    title: 'Таблица',
+    path: '/spreadsheets/:id',
+  },
 };
 
 export default siteMap;

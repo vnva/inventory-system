@@ -10,7 +10,7 @@ import {
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { forwardRef } from 'react';
 
-const PasswordInput = forwardRef<HTMLInputElement, InputElementProps>(
+export const PasswordInput = forwardRef<HTMLInputElement, InputElementProps>(
   (props, ref) => {
     const [isHidden, setIsHidden] = useState(true);
 
@@ -40,5 +40,3 @@ const PasswordInput = forwardRef<HTMLInputElement, InputElementProps>(
     );
   }
 );
-
-export default PasswordInput;

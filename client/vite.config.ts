@@ -5,7 +5,7 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [svgr(), react({ include: ['**/*.md'] })],
+  plugins: [svgr(), react()],
   server: { port: 8080, host: '0.0.0.0' },
   resolve: {
     alias: [

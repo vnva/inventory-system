@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { FIRST_USER } from 'src/consts';
 import { GetUser } from '../auth/decorators';
 import { JwtGuard } from '../auth/guards';
 import { CreateUserDTO } from './dto';
@@ -12,6 +13,11 @@ export class UsersController {
   @Get('/me')
   getMe(@GetUser() user) {
     return user;
+  }
+
+  @Get('/init')
+  init() {
+    return this.usersService.createUser(FIRST_USER);
   }
 
   @UseGuards(JwtGuard)

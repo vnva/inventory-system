@@ -21,7 +21,6 @@ export const MainLayoutHeader: React.FC = () => {
 
   const { userIsLoaded } = useAppSelector(state => state.auth);
 
-  const logoTextColor = useColorModeValue('teal.500', 'teal.300');
   const toggleButtonColorScheme = useColorModeValue('gray', 'yellow');
 
   return (
@@ -32,7 +31,7 @@ export const MainLayoutHeader: React.FC = () => {
         alignItems="center"
         maxW="container.xl"
       >
-        <Text fontWeight="bold" fontSize="lg" color={logoTextColor}>
+        <Text fontWeight="bold" fontSize="lg">
           Инвентаризация
         </Text>
         <Flex alignItems="center">
@@ -46,7 +45,7 @@ export const MainLayoutHeader: React.FC = () => {
           </Link>
           <Link
             as={RouterLink}
-            to={siteMap.dashboard.path}
+            to={siteMap.spreadsheets.path}
             fontSize="sm"
             mr={4}
           >
